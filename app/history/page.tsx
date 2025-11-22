@@ -93,27 +93,33 @@ export default function HistoryPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4">
+    <div className="min-h-screen relative pt-[100px] pb-16">
       <div className="container mx-auto max-w-6xl">
-        <div className="mb-8">
+        {/* Header */}
+        <div className="mb-12 animate-fade-in" style={{ marginBottom: 'var(--element-gap)' }}>
           <Link
             href="/"
-            className="text-blue-600 dark:text-blue-400 hover:underline mb-4 inline-block flex items-center gap-2"
+            className="inline-flex items-center gap-2 mb-8 transition-colors duration-300"
+            style={{ color: 'var(--text-secondary)', marginBottom: 'var(--element-gap-sm)' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-cyan)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-medium">Back to Home</span>
           </Link>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-[32px] font-bold mb-4" style={{ color: 'var(--text-primary)', marginBottom: 'var(--element-gap-sm)' }}>
             Assignment History
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
             View and manage your saved assignments
           </p>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
-          <div className="relative mb-6">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+        {/* Search & List */}
+        <div className="glass-card animate-fade-in">
+          {/* Search Bar */}
+          <div className="relative mb-8" style={{ marginBottom: 'var(--element-gap)' }}>
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: 'var(--text-secondary)' }} />
             <input
               type="text"
               placeholder="Search assignments..."
@@ -122,57 +128,67 @@ export default function HistoryPage() {
                 setSearchQuery(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              className="glass-input w-full pl-12 pr-4 py-4 rounded-lg focus:outline-none focus:ring-2 transition-all duration-300"
+              style={{
+                color: 'var(--text-primary)',
+                '--tw-ring-color': 'var(--accent-cyan)',
+              } as React.CSSProperties}
             />
           </div>
 
+          {/* Content */}
           {isLoading ? (
             <Loader message="Loading assignments..." />
           ) : assignments.length === 0 ? (
-            <div className="text-center py-12">
-              <FileText className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-              <p className="text-gray-600 dark:text-gray-400">
+            <div className="text-center py-16">
+              <div className="inline-flex p-6 glass-card-strong rounded-lg mb-6">
+                <FileText className="w-16 h-16" style={{ color: 'var(--text-secondary)' }} />
+              </div>
+              <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
                 {searchQuery ? 'No assignments found matching your search' : 'No assignments saved yet'}
               </p>
             </div>
           ) : (
             <>
-              <div className="space-y-4">
+              <div className="flex flex-col" style={{ gap: 'var(--element-gap-sm)' }}>
                 {assignments.map((assignment) => (
                   <div
                     key={assignment.id}
-                    className="border border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="glass-card-sm hover-scale group transition-all duration-300"
                   >
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold mb-3 line-clamp-2 text-lg" style={{ color: 'var(--text-primary)' }}>
                           {assignment.question.substring(0, 150)}
                           {assignment.question.length > 150 ? '...' : ''}
                         </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {new Date(assignment.createdAt).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
-                        </p>
+                        <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
+                          <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--accent-cyan)' }} />
+                          <span>
+                            {new Date(assignment.createdAt).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex gap-2 ml-4">
+                      <div className="flex items-center" style={{ gap: '8px' }}>
                         <button
                           onClick={() => handleView(assignment)}
-                          className="p-2 hover:bg-blue-100 dark:hover:bg-blue-900 rounded-lg transition-colors"
+                          className="p-3 glass-card-strong rounded-lg hover:glow-cyan transition-all duration-300 group/btn"
                           title="View"
                         >
-                          <Eye className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                          <Eye className="w-5 h-5 transition-transform duration-300 group-hover/btn:scale-110" style={{ color: 'var(--accent-cyan)' }} />
                         </button>
                         <button
                           onClick={() => handleDelete(assignment.id)}
-                          className="p-2 hover:bg-red-100 dark:hover:bg-red-900 rounded-lg transition-colors"
+                          className="p-3 glass-card-strong rounded-lg hover:bg-[rgba(239,68,68,0.1)] transition-all duration-300 group/btn"
                           title="Delete"
                         >
-                          <Trash2 className="w-5 h-5 text-red-600 dark:text-red-400" />
+                          <Trash2 className="w-5 h-5 transition-transform duration-300 group-hover/btn:rotate-12" style={{ color: '#ef4444' }} />
                         </button>
                       </div>
                     </div>
@@ -180,22 +196,25 @@ export default function HistoryPage() {
                 ))}
               </div>
 
+              {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 mt-6">
+                <div className="flex items-center justify-center mt-12" style={{ gap: 'var(--button-gap)', marginTop: 'var(--element-gap)' }}>
                   <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page === 1}
-                    className="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
+                    className="btn-glass disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none"
                   >
                     Previous
                   </button>
-                  <span className="text-gray-600 dark:text-gray-400">
-                    Page {page} of {totalPages}
-                  </span>
+                  <div className="glass-input px-6 py-3 rounded-lg">
+                    <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                      Page {page} of {totalPages}
+                    </span>
+                  </div>
                   <button
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={page === totalPages}
-                    className="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
+                    className="btn-glass disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none"
                   >
                     Next
                   </button>
@@ -208,4 +227,3 @@ export default function HistoryPage() {
     </div>
   );
 }
-

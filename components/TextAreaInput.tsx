@@ -43,14 +43,20 @@ export default function TextAreaInput({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         maxLength={maxLength}
-        className="w-full min-h-[200px] p-4 border border-gray-300 dark:border-gray-600 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+        className="glass-input w-full min-h-[250px] p-4 rounded-lg resize-none focus:outline-none focus:ring-2 transition-all duration-300"
+        style={{
+          color: 'var(--text-primary)',
+          '--tw-ring-color': 'var(--accent-cyan)',
+        } as React.CSSProperties}
         rows={8}
       />
       <div className="flex items-center justify-between mt-2">
-        <div className="text-sm text-gray-500 dark:text-gray-400">
-          {characterCount.toLocaleString()} / {maxLength.toLocaleString()} characters
+        <div className="text-sm flex items-center gap-2" style={{ color: 'var(--text-secondary)' }}>
+          <span>
+            {characterCount.toLocaleString()} / {maxLength.toLocaleString()} characters
+          </span>
           {remaining < 100 && (
-            <span className="text-orange-500 ml-2">
+            <span className="text-orange-500 font-medium animate-pulse">
               ({remaining} remaining)
             </span>
           )}
@@ -58,14 +64,13 @@ export default function TextAreaInput({
         {value && (
           <button
             onClick={handleClear}
-            className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-colors"
+            className="p-1 hover:bg-[rgba(239,68,68,0.1)] rounded-lg transition-colors duration-300"
             title="Clear"
           >
-            <X className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+            <X className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
           </button>
         )}
       </div>
     </div>
   );
 }
-

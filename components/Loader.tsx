@@ -14,13 +14,18 @@ export default function Loader({ message = 'Loading...', size = 'md' }: LoaderPr
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-8">
-      <div
-        className={`${sizeClasses[size]} border-4 border-blue-200 dark:border-blue-800 border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin`}
-      />
+      <div className="relative">
+        <div
+          className={`${sizeClasses[size]} border-4 border-[rgba(0,232,255,0.2)] border-t-[#00E8FF] rounded-full animate-spin glow-cyan`}
+        />
+        <div
+          className={`absolute inset-0 ${sizeClasses[size]} border-4 border-transparent border-r-[#A855F7] rounded-full animate-spin`}
+          style={{ animationDuration: '1.5s', animationDirection: 'reverse' }}
+        />
+      </div>
       {message && (
-        <p className="text-gray-600 dark:text-gray-400 text-sm">{message}</p>
+        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{message}</p>
       )}
     </div>
   );
 }
-

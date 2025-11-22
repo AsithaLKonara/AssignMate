@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Upload, File, X } from 'lucide-react';
+import { Upload, File, X, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface FileUploaderProps {
@@ -21,13 +21,11 @@ export default function FileUploader({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = async (selectedFile: File) => {
-    // Validate file type
     if (selectedFile.type !== 'application/pdf') {
       toast.error('Please upload a PDF file');
       return;
     }
 
-    // Validate file size
     if (selectedFile.size > maxSize) {
       toast.error(`File size exceeds ${maxSize / 1024 / 1024}MB limit`);
       return;
@@ -36,7 +34,6 @@ export default function FileUploader({
     setFile(selectedFile);
     onFileSelect(selectedFile);
 
-    // Extract text from PDF
     setIsUploading(true);
     try {
       const formData = new FormData();
@@ -105,21 +102,27 @@ export default function FileUploader({
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           className={`
-            border-2 border-dashed rounded-lg p-8 text-center cursor-pointer
-            transition-colors
-            ${isDragging ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-300 dark:border-gray-600'}
-            hover:border-blue-400 dark:hover:border-blue-500
+            glass-input border-2 border-dashed rounded-lg p-12 text-center cursor-pointer
+            transition-all duration-300 hover-scale
+            ${isDragging 
+              ? 'border-[#00E8FF] glow-cyan' 
+              : 'border-[rgba(255,255,255,0.12)] hover:border-[rgba(255,255,255,0.2)]'
+            }
           `}
           onClick={() => fileInputRef.current?.click()}
         >
-          <Upload className="w-12 h-12 mx-auto mb-4 text-gray-400 dark:text-gray-500" />
-          <p className="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-300">
+          <Upload 
+            className={`w-12 h-12 mx-auto mb-4 transition-colors duration-300 ${
+              isDragging ? 'text-[#00E8FF]' : 'text-[#A1A1AA]'
+            }`}
+          />
+          <p className="text-lg font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
             Drag and drop your PDF here
           </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+          <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
             or click to browse
           </p>
-          <p className="text-xs text-gray-400 dark:text-gray-500">
+          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
             Maximum file size: {maxSize / 1024 / 1024}MB
           </p>
           <input
@@ -131,28 +134,31 @@ export default function FileUploader({
           />
         </div>
       ) : (
-        <div className="border border-gray-300 dark:border-gray-600 rounded-lg p-4 flex items-center justify-between bg-gray-50 dark:bg-gray-800">
+        <div className="glass-card p-4 flex items-center justify-between animate-fade-in">
           <div className="flex items-center gap-3">
-            <File className="w-8 h-8 text-blue-500" />
+            <div className="p-3 glass-card-strong rounded-lg">
+              <File className="w-8 h-8" style={{ color: 'var(--accent-cyan)' }} />
+            </div>
             <div>
-              <p className="font-medium text-gray-900 dark:text-white">
+              <p className="font-medium" style={{ color: 'var(--text-primary)' }}>
                 {file.name}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                 {(file.size / 1024).toFixed(2)} KB
               </p>
             </div>
           </div>
           {isUploading ? (
-            <div className="text-sm text-blue-600 dark:text-blue-400">
-              Parsing...
+            <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--accent-cyan)' }}>
+              <Loader2 className="w-5 h-5 animate-spin" />
+              <span>Parsing PDF...</span>
             </div>
           ) : (
             <button
               onClick={handleRemove}
-              className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors"
+              className="p-2 hover:bg-[rgba(239,68,68,0.1)] rounded-lg transition-colors duration-300"
             >
-              <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              <X className="w-5 h-5" style={{ color: 'var(--text-secondary)' }} />
             </button>
           )}
         </div>
@@ -160,4 +166,3 @@ export default function FileUploader({
     </div>
   );
 }
-

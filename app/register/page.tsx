@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { UserPlus, Mail, Lock, User } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function RegisterPage() {
@@ -44,71 +44,87 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center py-12 px-4">
-      <div className="max-w-md w-full">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              Register
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400">
-              Create a new account
+    <div className="min-h-screen relative pt-[100px] pb-16 flex items-center justify-center">
+      <div className="container mx-auto max-w-md w-full">
+        <div className="glass-card-strong animate-fade-in">
+          {/* Header */}
+          <div className="text-center mb-10" style={{ marginBottom: 'var(--element-gap)' }}>
+            <div className="inline-flex p-4 glass-card rounded-lg mb-6">
+              <UserPlus className="w-8 h-8" style={{ color: 'var(--accent-purple)' }} />
+            </div>
+            <h1 className="text-[32px] font-bold mb-3 gradient-text">Create Account</h1>
+            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+              Join us and get started today
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="flex flex-col" style={{ gap: 'var(--element-gap)' }}>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                 Name
               </label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <div className="relative group">
+                <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-300 group-focus-within:text-[#A855F7]" style={{ color: 'var(--text-secondary)' }} />
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
                   minLength={2}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  className="glass-input w-full pl-12 pr-4 py-4 rounded-lg focus:outline-none focus:ring-2 transition-all duration-300"
+                  style={{
+                    color: 'var(--text-primary)',
+                    '--tw-ring-color': 'var(--accent-purple)',
+                  } as React.CSSProperties}
                   placeholder="Your name"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                 Email
               </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <div className="relative group">
+                <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-300 group-focus-within:text-[#A855F7]" style={{ color: 'var(--text-secondary)' }} />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  className="glass-input w-full pl-12 pr-4 py-4 rounded-lg focus:outline-none focus:ring-2 transition-all duration-300"
+                  style={{
+                    color: 'var(--text-primary)',
+                    '--tw-ring-color': 'var(--accent-purple)',
+                  } as React.CSSProperties}
                   placeholder="your@email.com"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                 Password
               </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <div className="relative group">
+                <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-300 group-focus-within:text-[#A855F7]" style={{ color: 'var(--text-secondary)' }} />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   minLength={6}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  className="glass-input w-full pl-12 pr-4 py-4 rounded-lg focus:outline-none focus:ring-2 transition-all duration-300"
+                  style={{
+                    color: 'var(--text-primary)',
+                    '--tw-ring-color': 'var(--accent-purple)',
+                  } as React.CSSProperties}
                   placeholder="••••••••"
                 />
               </div>
-              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              <p className="mt-2 text-xs flex items-center gap-2" style={{ color: 'var(--text-muted)' }}>
+                <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--accent-purple)' }} />
                 Minimum 6 characters
               </p>
             </div>
@@ -116,25 +132,31 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors"
+              className="w-full btn-neon glow-hover disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none flex items-center justify-center gap-2 mt-4"
+              style={{ marginTop: 'var(--element-gap)' }}
             >
               <UserPlus className="w-5 h-5" />
               {isLoading ? 'Registering...' : 'Register'}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-gray-600 dark:text-gray-400">
+          {/* Footer Links */}
+          <div className="mt-10 text-center" style={{ marginTop: 'var(--element-gap)' }}>
+            <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>
               Already have an account?{' '}
-              <Link href="/login" className="text-blue-600 dark:text-blue-400 hover:underline">
+              <Link href="/login" className="font-semibold gradient-text hover:underline">
                 Login
               </Link>
             </p>
-          </div>
-
-          <div className="mt-4 text-center">
-            <Link href="/" className="text-sm text-gray-500 dark:text-gray-400 hover:underline">
-              ← Back to Home
+            <Link 
+              href="/" 
+              className="inline-flex items-center gap-2 text-sm transition-colors duration-300"
+              style={{ color: 'var(--text-secondary)' }}
+              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-cyan)'}
+              onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Home
             </Link>
           </div>
         </div>
@@ -142,4 +164,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-

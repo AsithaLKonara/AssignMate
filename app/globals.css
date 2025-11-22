@@ -1,21 +1,470 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ========================================
+     NEO-FUTURISTIC COLOR PALETTE (2025 SaaS Grade)
+     ======================================== */
+  
+  /* Core Colors */
+  --bg-primary: #0A0F1F;           /* Deep Navy */
+  --bg-secondary: #0F1629;         /* Dark Slate */
+  --card-glass: rgba(255, 255, 255, 0.05);  /* Transparent White */
+  --card-glass-strong: rgba(255, 255, 255, 0.08);
+  
+  /* Accent Colors */
+  --accent-cyan: #00E8FF;          /* Neon Cyan */
+  --accent-purple: #A855F7;        /* Electric Purple */
+  --accent-purple-dark: #8B5CF6;
+  
+  /* Text Colors */
+  --text-primary: #FFFFFF;
+  --text-secondary: #A1A1AA;
+  --text-muted: #71717A;
+  
+  /* Border Colors */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(255, 255, 255, 0.12);
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(90deg, #00E8FF, #8B5CF6);
+  --gradient-primary-hover: linear-gradient(90deg, #00D4E8, #7C3AED);
+  --gradient-hero: linear-gradient(135deg, rgba(0, 232, 255, 0.1), rgba(168, 85, 247, 0.1));
+  
+  /* Glows */
+  --glow-soft: 0 0 40px rgba(0, 232, 255, 0.25);
+  --glow-neon: 0 0 14px rgba(168, 85, 247, 0.55);
+  --glow-cyan: 0 0 20px rgba(0, 232, 255, 0.4);
+  --glow-purple: 0 0 20px rgba(168, 85, 247, 0.4);
+  --glow-button: 0 0 20px rgba(168, 85, 247, 0.5);
+  
+  /* Shadows */
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 16px 48px rgba(0, 0, 0, 0.4);
+
+  /* ========================================
+     TYPOGRAPHY SYSTEM
+     ======================================== */
+  --font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Font Sizes */
+  --text-hero: 4rem;           /* 64px */
+  --text-section: 2rem;        /* 32px */
+  --text-subheading: 1.5rem;   /* 24px */
+  --text-body: 1rem;           /* 16px */
+  --text-small: 0.875rem;      /* 14px */
+  --text-button: 0.9375rem;    /* 15px */
+  
+  /* Font Weights */
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  
+  /* Letter Spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  
+  /* ========================================
+     SPACING & LAYOUT SYSTEM (8px Grid)
+     ======================================== */
+  --container-width: 1280px;
+  --container-padding: clamp(1.5rem, 4vw, 3rem); /* Responsive: 24px-48px */
+  
+  /* Section Spacing */
+  --section-padding-top: 120px;
+  --section-padding-bottom: 120px;
+  --hero-padding-top: 180px;
+  --hero-padding-bottom: 100px;
+  --section-gap: 80px; /* Gap between sections */
+  
+  /* Component Spacing */
+  --card-padding: 32px;
+  --card-padding-lg: 40px;
+  --card-padding-sm: 24px;
+  --card-gap: 32px; /* Gap between cards */
+  --element-gap: 24px; /* Gap between elements */
+  --element-gap-sm: 16px; /* Smaller gap */
+  
+  /* Button Spacing */
+  --button-padding-x: 32px;
+  --button-padding-y: 18px;
+  --button-gap: 16px;
+  
+  /* Input Spacing */
+  --input-padding-x: 20px;
+  --input-padding-y: 16px;
+  --input-gap: 16px;
+  
+  /* Border Radius */
+  --radius-card: 24px;
+  --radius-input: 16px;
+  --radius-button: 16px;
+  --radius-sm: 12px;
+  
+  /* Header */
+  --header-height: 80px;
+  --header-padding-x: 32px;
+  --header-padding-y: 24px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-purple: var(--accent-purple);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  font-family: var(--font-family);
+  font-size: var(--text-body);
+  font-weight: var(--font-regular);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Futuristic Background Effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(0, 232, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ========================================
+   TYPOGRAPHY HIERARCHY
+   ======================================== */
+h1, .h1 {
+  font-size: var(--text-hero);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+}
+
+h2, .h2 {
+  font-size: var(--text-section);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.2;
+}
+
+h3, .h3 {
+  font-size: var(--text-subheading);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-normal);
+  line-height: 1.3;
+}
+
+/* ========================================
+   GLASSMORPHISM UTILITIES
+   ======================================== */
+.glass-card {
+  background: var(--card-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-glass);
+  padding: var(--card-padding);
+}
+
+.glass-card-strong {
+  background: var(--card-glass-strong);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glow);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-elevated);
+  padding: var(--card-padding-lg);
+}
+
+.glass-card-sm {
+  background: var(--card-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-glass);
+  padding: var(--card-padding-sm);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-input);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ========================================
+   NEON GLOW EFFECTS
+   ======================================== */
+.glow-soft {
+  box-shadow: var(--glow-soft);
+}
+
+.glow-neon {
+  box-shadow: var(--glow-neon);
+}
+
+.glow-cyan {
+  box-shadow: var(--glow-cyan);
+}
+
+.glow-purple {
+  box-shadow: var(--glow-purple);
+}
+
+.glow-button {
+  box-shadow: var(--glow-button);
+}
+
+.glow-hover:hover {
+  box-shadow: var(--glow-button);
+  transition: box-shadow 0.3s ease;
+}
+
+/* ========================================
+   GRADIENT TEXT
+   ======================================== */
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========================================
+   BUTTON STYLES
+   ======================================== */
+.btn-neon {
+  background: var(--gradient-primary);
+  padding: var(--button-padding-y) var(--button-padding-x);
+  border-radius: var(--radius-button);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-button);
+  color: var(--text-primary);
+  box-shadow: var(--glow-button);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--button-gap);
+}
+
+.btn-neon:hover {
+  background: var(--gradient-primary-hover);
+  box-shadow: var(--glow-neon);
+  transform: translateY(-2px);
+}
+
+.btn-neon:active {
+  transform: translateY(0);
+}
+
+.btn-glass {
+  background: var(--card-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  padding: var(--button-padding-y) var(--button-padding-x);
+  border-radius: var(--radius-button);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-glass:hover {
+  background: var(--card-glass-strong);
+  border-color: var(--border-glow);
+  box-shadow: var(--glow-soft);
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Hover Scale Effect */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.03);
+}
+
+/* ========================================
+   LAYOUT UTILITIES
+   ======================================== */
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  width: 100%;
+}
+
+/* Section Spacing */
+.section-padding {
+  padding-top: var(--section-padding-top);
+  padding-bottom: var(--section-padding-bottom);
+}
+
+.hero-padding {
+  padding-top: var(--hero-padding-top);
+  padding-bottom: var(--hero-padding-bottom);
+}
+
+/* Responsive Section Padding */
+@media (max-width: 768px) {
+  .section-padding {
+    padding-top: clamp(60px, 15vw, 80px);
+    padding-bottom: clamp(60px, 15vw, 80px);
+  }
+  
+  .hero-padding {
+    padding-top: clamp(120px, 25vw, 140px);
+    padding-bottom: clamp(60px, 15vw, 80px);
+  }
+}
+
+/* Content Alignment */
+.content-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.content-start {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Grid Gaps */
+.grid-gap {
+  gap: var(--card-gap);
+}
+
+.grid-gap-sm {
+  gap: var(--element-gap);
+}
+
+/* Vertical Rhythm */
+.space-y-section {
+  margin-bottom: var(--section-gap);
+}
+
+.space-y-element {
+  margin-bottom: var(--element-gap);
+}
+
+.space-y-element-sm {
+  margin-bottom: var(--element-gap-sm);
+}
+
+/* ========================================
+   CUSTOM SCROLLBAR
+   ======================================== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--card-glass-strong);
+  border-radius: 5px;
+  border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-glow);
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @layer utilities {

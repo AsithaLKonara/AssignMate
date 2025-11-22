@@ -84,25 +84,24 @@ export default function DownloadButtons({ text, title = 'Assignment Answer' }: D
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-wrap items-center" style={{ gap: 'var(--button-gap)' }}>
       <button
         onClick={handleExportPDF}
         disabled={isExportingPDF || isExportingDOCX}
-        className="flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors"
+        className="btn-glass glow-hover disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none flex items-center gap-2"
       >
-        <FileText className="w-5 h-5" />
+        <FileText className={`w-5 h-5 ${isExportingPDF ? 'animate-pulse' : ''}`} />
         {isExportingPDF ? 'Exporting...' : 'Download PDF'}
       </button>
 
       <button
         onClick={handleExportDOCX}
         disabled={isExportingPDF || isExportingDOCX}
-        className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors"
+        className="btn-glass glow-hover disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none flex items-center gap-2"
       >
-        <File className="w-5 h-5" />
+        <File className={`w-5 h-5 ${isExportingDOCX ? 'animate-pulse' : ''}`} />
         {isExportingDOCX ? 'Exporting...' : 'Download DOCX'}
       </button>
     </div>
   );
 }
-

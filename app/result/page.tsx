@@ -7,7 +7,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import AnswerBox from '@/components/AnswerBox';
 import DownloadButtons from '@/components/DownloadButtons';
 import Loader from '@/components/Loader';
-import { RefreshCw, Save, ArrowLeft } from 'lucide-react';
+import { RefreshCw, Save, ArrowLeft, FileText } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
 
@@ -33,7 +33,6 @@ function ResultContent() {
       router.push('/upload');
     }
 
-    // Check authentication
     checkAuth();
   }, [searchParams, router]);
 
@@ -111,44 +110,58 @@ function ResultContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4">
-      <div className="container mx-auto max-w-4xl">
-        <div className="mb-8">
+    <div className="min-h-screen relative pt-[100px] pb-16">
+      <div className="container mx-auto max-w-5xl">
+        {/* Header */}
+        <div className="mb-12 animate-fade-in" style={{ marginBottom: 'var(--element-gap)' }}>
           <Link
             href="/upload"
-            className="text-blue-600 dark:text-blue-400 hover:underline mb-4 inline-block flex items-center gap-2"
+            className="inline-flex items-center gap-2 mb-8 transition-colors duration-300"
+            style={{ color: 'var(--text-secondary)', marginBottom: 'var(--element-gap-sm)' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-cyan)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Upload
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-medium">Back to Upload</span>
           </Link>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-[32px] font-bold mb-4" style={{ color: 'var(--text-primary)', marginBottom: 'var(--element-gap-sm)' }}>
             Generated Answer
           </h1>
         </div>
 
+        {/* Question Display */}
         {question && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              Question
-            </h2>
-            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
-              {question}
-            </p>
+          <div className="glass-card mb-8 animate-fade-in" style={{ marginBottom: 'var(--element-gap)' }}>
+            <div className="flex items-center gap-4 mb-6" style={{ gap: 'var(--element-gap-sm)', marginBottom: 'var(--element-gap-sm)' }}>
+              <div className="p-3 glass-card-strong rounded-lg">
+                <FileText className="w-6 h-6" style={{ color: 'var(--accent-cyan)' }} />
+              </div>
+              <h2 className="text-[24px] font-semibold" style={{ color: 'var(--text-primary)' }}>
+                Question
+              </h2>
+            </div>
+            <div className="glass-input p-6 rounded-lg">
+              <p className="whitespace-pre-wrap leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                {question}
+              </p>
+            </div>
           </div>
         )}
 
+        {/* Answer Display */}
         {answer ? (
           <>
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+            <div className="glass-card-strong mb-8 animate-fade-in" style={{ marginBottom: 'var(--element-gap)' }}>
               <AnswerBox answer={answer} />
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
-              <div className="flex flex-wrap gap-4">
+            {/* Action Buttons */}
+            <div className="glass-card animate-fade-in">
+              <div className="flex flex-wrap items-center" style={{ gap: 'var(--button-gap)' }}>
                 <button
                   onClick={handleRewrite}
                   disabled={isRewriting}
-                  className="flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors"
+                  className="btn-neon glow-hover disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none flex items-center gap-2"
                 >
                   <RefreshCw className={`w-5 h-5 ${isRewriting ? 'animate-spin' : ''}`} />
                   {isRewriting ? 'Rewriting...' : 'Rewrite Answer'}
@@ -158,9 +171,9 @@ function ResultContent() {
                   <button
                     onClick={handleSave}
                     disabled={isSaving}
-                    className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors"
+                    className="btn-glass glow-hover disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                   >
-                    <Save className="w-5 h-5" />
+                    <Save className={`w-5 h-5 ${isSaving ? 'animate-pulse' : ''}`} />
                     {isSaving ? 'Saving...' : 'Save to History'}
                   </button>
                 )}
@@ -170,7 +183,7 @@ function ResultContent() {
             </div>
           </>
         ) : (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <div className="glass-card-strong animate-fade-in">
             <Loader message="Loading answer..." />
           </div>
         )}
@@ -182,9 +195,9 @@ function ResultContent() {
 export default function ResultPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+      <div className="min-h-screen relative pt-[100px] pb-16">
+        <div className="container mx-auto max-w-5xl">
+          <div className="glass-card-strong">
             <Loader message="Loading..." />
           </div>
         </div>
@@ -194,4 +207,3 @@ export default function ResultPage() {
     </Suspense>
   );
 }
-
