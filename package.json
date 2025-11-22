@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.10.1",
@@ -36,7 +37,8 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "eslint": "^8",
+    "@types/pdfkit": "^0.17.3",
+    "eslint": "^9.39.1",
     "eslint-config-next": "^16.0.3"
   }
 }

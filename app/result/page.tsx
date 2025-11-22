@@ -1,6 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+export const dynamic = 'force-dynamic';
+
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import AnswerBox from '@/components/AnswerBox';
 import DownloadButtons from '@/components/DownloadButtons';
@@ -9,7 +11,7 @@ import { RefreshCw, Save, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
 
-export default function ResultPage() {
+function ResultContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [answer, setAnswer] = useState('');
@@ -174,6 +176,22 @@ export default function ResultPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ResultPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <Loader message="Loading..." />
+          </div>
+        </div>
+      </div>
+    }>
+      <ResultContent />
+    </Suspense>
   );
 }
 

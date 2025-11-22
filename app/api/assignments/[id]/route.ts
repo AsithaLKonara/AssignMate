@@ -5,9 +5,10 @@ import { verifyToken } from '@/lib/jwt';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const token = request.cookies.get('token')?.value;
 
     if (!token) {
@@ -28,7 +29,7 @@ export async function GET(
     await connectDB();
 
     const assignment = await Assignment.findOne({
-      _id: params.id,
+      _id: id,
       userId: decoded.userId,
     }).select('-__v');
 
@@ -59,9 +60,10 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const token = request.cookies.get('token')?.value;
 
     if (!token) {
@@ -82,7 +84,7 @@ export async function DELETE(
     await connectDB();
 
     const assignment = await Assignment.findOneAndDelete({
-      _id: params.id,
+      _id: id,
       userId: decoded.userId,
     });
 

@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import pdf from 'pdf-parse';
+
+// Dynamic import for pdf-parse to work with Turbopack
+const pdfParse = async () => {
+  const pdfModule = await import('pdf-parse');
+  return pdfModule;
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -35,6 +40,8 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(arrayBuffer);
 
     // Parse PDF
+    const pdfModule = await pdfParse();
+    const pdf = (pdfModule as any).default || pdfModule;
     const data = await pdf(buffer);
     const extractedText = data.text.trim();
 
